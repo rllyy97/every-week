@@ -25,6 +25,7 @@ import { WeekSummary } from './WeekSummary';
 import { SettingsDialog } from './SettingsDialog';
 import { supabase } from '../lib/supabase';
 import type { Event, Category } from '../types/database';
+import shared from '../styles/shared.module.css';
 import './Calendar.css';
 
 const WEEKS_BUFFER = 26; // load 26 weeks up and down from current
@@ -156,7 +157,7 @@ export function Calendar() {
         <h1 className="calendar-logo">Seven</h1>
         <div className="calendar-header-actions">
           <SettingsDialog />
-          <button className="header-btn" onClick={handleSignOut}>
+          <button className={shared.btnSurface} onClick={handleSignOut}>
             Sign Out
           </button>
         </div>

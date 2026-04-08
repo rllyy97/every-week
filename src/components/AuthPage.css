@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #0a0a0a;
+  background: var(--bg-page);
 }
 
 .auth-card {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   padding: 2.5rem;
   width: 100%;
   max-width: 400px;
@@ -19,12 +19,12 @@
 .auth-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin: 0 0 0.25rem;
 }
 
 .auth-subtitle {
-  color: #888;
+  color: var(--text-faint);
   margin: 0 0 2rem;
   font-size: 0.875rem;
 }
@@ -45,56 +45,43 @@
 .auth-field label {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #ccc;
+  color: var(--text-tertiary);
 }
 
-.auth-field input {
-  padding: 0.625rem 0.75rem;
-  background: #0a0a0a;
-  border: 1px solid #333;
-  border-radius: 6px;
-  color: #fff;
-  font-size: 0.875rem;
-  outline: none;
-  transition: border-color 0.15s;
-}
-
-.auth-field input:focus {
-  border-color: #3b82f6;
-}
+/* Auth inputs use shared .textInputInset via CSS module in the component */
 
 .auth-error {
-  color: #ef4444;
+  color: var(--accent-red);
   font-size: 0.8125rem;
   margin: 0;
 }
 
 .auth-button {
   padding: 0.625rem;
-  background: #3b82f6;
-  color: #fff;
+  background: var(--accent-blue);
+  color: var(--text-primary);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background var(--transition-fast);
   margin-top: 0.5rem;
 }
 
 .auth-button:hover {
-  background: #2563eb;
+  background: var(--accent-blue-hover);
 }
 
 .auth-button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .auth-toggle {
   background: none;
   border: none;
-  color: #888;
+  color: var(--text-faint);
   font-size: 0.8125rem;
   cursor: pointer;
   margin-top: 1.25rem;
@@ -102,5 +89,5 @@
 }
 
 .auth-toggle:hover {
-  color: #ccc;
+  color: var(--text-tertiary);
 }

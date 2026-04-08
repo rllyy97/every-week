@@ -3,6 +3,7 @@ import { format, parseISO } from 'date-fns';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useCreateEvent, useUpdateEvent, useDeleteEvent } from '../hooks/useEvents';
 import type { Event, Category } from '../types/database';
+import shared from '../styles/shared.module.css';
 import './DayExpanded.css';
 
 interface DayExpandedProps {
@@ -46,11 +47,11 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
   return (
     <Dialog.Root open onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="day-expanded-overlay" />
-        <Dialog.Content className="day-expanded-content" aria-describedby={undefined}>
-          <div className="day-expanded-header">
-            <Dialog.Title className="day-expanded-title">{formattedDate}</Dialog.Title>
-            <Dialog.Close className="day-expanded-close">×</Dialog.Close>
+        <Dialog.Overlay className={shared.overlay} />
+        <Dialog.Content className={`${shared.dialogContent} day-expanded-content`} aria-describedby={undefined}>
+          <div className={shared.dialogHeader}>
+            <Dialog.Title className={shared.dialogTitle}>{formattedDate}</Dialog.Title>
+            <Dialog.Close className={shared.closeBtn}>×</Dialog.Close>
           </div>
 
           <div className="day-expanded-events">
@@ -94,7 +95,7 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
                     </button>
                   </div>
                   <button
-                    className="event-delete-btn"
+                    className={shared.btnDelete}
                     onClick={() => deleteEvent.mutate(event.id)}
                   >
                     ✕
@@ -105,18 +106,19 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
           </div>
 
           {showAddForm ? (
-            <div className="add-event-form">
+            <div className={`${shared.formColumn} add-event-form`}>
               <input
-                className="add-event-input"
+                className={shared.textInput}
                 placeholder="Event title"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
                 autoFocus
               />
-              <div className="add-event-row">
+              <div className={shared.formRow}>
                 <select
-                  className="add-event-select"
+                  className={shared.selectInput}
+                  style={{ flex: 1 }}
                   value={newCategoryId}
                   onChange={(e) => setNewCategoryId(e.target.value)}
                 >
@@ -143,12 +145,12 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
                   </button>
                 </div>
               </div>
-              <div className="add-event-actions">
-                <button className="add-event-cancel" onClick={() => setShowAddForm(false)}>
+              <div className={shared.formActions}>
+                <button className={shared.btnSecondary} onClick={() => setShowAddForm(false)}>
                   Cancel
                 </button>
                 <button
-                  className="add-event-submit"
+                  className={shared.btnPrimary}
                   onClick={handleAdd}
                   disabled={!newTitle.trim() || createEvent.isPending}
                 >

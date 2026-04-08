@@ -1,52 +1,9 @@
-.day-expanded-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 50;
-}
+/* Dialog base styles come from shared.module.css applied in the component */
 
 .day-expanded-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1.5rem;
-  width: 90%;
   max-width: 420px;
   max-height: 80vh;
   overflow-y: auto;
-  z-index: 51;
-}
-
-.day-expanded-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-
-.day-expanded-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  margin: 0;
-}
-
-.day-expanded-close {
-  background: none;
-  border: none;
-  color: #666;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.day-expanded-close:hover {
-  color: #ccc;
 }
 
 .day-expanded-events {
@@ -57,7 +14,7 @@
 }
 
 .day-expanded-empty {
-  color: #555;
+  color: var(--text-disabled);
   font-size: 0.875rem;
   text-align: center;
   margin: 1rem 0;
@@ -68,8 +25,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.625rem 0.75rem;
-  background: #0a0a0a;
-  border-radius: 6px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-md);
   border-left: 3px solid;
 }
 
@@ -95,7 +52,7 @@
 
 .event-item-title {
   font-size: 0.875rem;
-  color: #e0e0e0;
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -103,7 +60,7 @@
 
 .event-item-category {
   font-size: 0.6875rem;
-  color: #666;
+  color: var(--text-subtle);
 }
 
 .event-item-actions {
@@ -117,15 +74,15 @@
   display: flex;
   align-items: center;
   gap: 0;
-  border: 1px solid #333;
-  border-radius: 4px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
 .duration-btn {
-  background: #1a1a1a;
+  background: var(--bg-surface);
   border: none;
-  color: #ccc;
+  color: var(--text-tertiary);
   width: 24px;
   height: 24px;
   font-size: 0.8125rem;
@@ -136,7 +93,7 @@
 }
 
 .duration-btn:hover:not(:disabled) {
-  background: #252525;
+  background: var(--bg-surface-hover);
 }
 
 .duration-btn:disabled {
@@ -152,105 +109,30 @@
   text-align: center;
 }
 
-.event-delete-btn {
-  background: none;
-  border: none;
-  color: #555;
-  cursor: pointer;
-  font-size: 0.75rem;
-  padding: 2px 4px;
-}
-
-.event-delete-btn:hover {
-  color: #ef4444;
-}
+/* Delete button styles come from shared.module.css applied in the component */
 
 .add-event-btn {
   width: 100%;
   padding: 0.625rem;
-  background: #0a0a0a;
-  border: 1px dashed #333;
-  border-radius: 6px;
-  color: #666;
+  background: var(--bg-inset);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-subtle);
   font-size: 0.8125rem;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all var(--transition-fast);
 }
 
 .add-event-btn:hover {
-  border-color: #555;
-  color: #999;
+  border-color: var(--text-disabled);
+  color: var(--text-muted);
 }
 
 .add-event-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   padding: 0.75rem;
-  background: #0a0a0a;
-  border-radius: 6px;
-  border: 1px solid #333;
+  background: var(--bg-inset);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
 }
 
-.add-event-input {
-  padding: 0.5rem;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 0.875rem;
-  outline: none;
-}
-
-.add-event-input:focus {
-  border-color: #3b82f6;
-}
-
-.add-event-row {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.add-event-select {
-  flex: 1;
-  padding: 0.375rem 0.5rem;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 0.8125rem;
-  outline: none;
-}
-
-.add-event-actions {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-}
-
-.add-event-cancel {
-  padding: 0.375rem 0.75rem;
-  background: none;
-  border: 1px solid #333;
-  border-radius: 4px;
-  color: #999;
-  font-size: 0.8125rem;
-  cursor: pointer;
-}
-
-.add-event-submit {
-  padding: 0.375rem 0.75rem;
-  background: #3b82f6;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.add-event-submit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+/* Input, select, row, actions, cancel, submit styles come from shared.module.css */

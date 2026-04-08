@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import * as Label from '@radix-ui/react-label';
+import shared from '../styles/shared.module.css';
 import './AuthPage.css';
 
 export function AuthPage() {
@@ -42,6 +43,7 @@ export function AuthPage() {
             <input
               id="email"
               type="email"
+              className={shared.textInputInset}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
@@ -55,6 +57,7 @@ export function AuthPage() {
             <input
               id="password"
               type="password"
+              className={shared.textInputInset}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"

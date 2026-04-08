@@ -24,7 +24,7 @@
 
 .week-summary-title {
   font-size: 0.8125rem;
-  color: #ccc;
+  color: var(--text-tertiary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

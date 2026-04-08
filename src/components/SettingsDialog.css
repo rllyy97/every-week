@@ -1,56 +1,9 @@
-.settings-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 50;
-}
-
-.settings-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1.5rem;
-  width: 90%;
-  max-width: 400px;
-  z-index: 51;
-}
-
-.settings-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-
-.settings-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #fff;
-  margin: 0;
-}
-
-.settings-close {
-  background: none;
-  border: none;
-  color: #666;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.settings-close:hover {
-  color: #ccc;
-}
+/* Dialog base styles come from shared.module.css applied in the component */
 
 .settings-section-title {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #888;
+  color: var(--text-faint);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 0.75rem;
@@ -63,65 +16,14 @@
   margin-bottom: 0.75rem;
 }
 
-.settings-category-row,
-.settings-add-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .settings-color-input {
   width: 32px;
   height: 32px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   background: transparent;
   padding: 0;
 }
 
-.settings-name-input {
-  flex: 1;
-  padding: 0.375rem 0.5rem;
-  background: #0a0a0a;
-  border: 1px solid #333;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 0.875rem;
-  outline: none;
-}
-
-.settings-name-input:focus {
-  border-color: #3b82f6;
-}
-
-.settings-delete-btn {
-  background: none;
-  border: none;
-  color: #555;
-  cursor: pointer;
-  font-size: 0.75rem;
-  padding: 4px 6px;
-}
-
-.settings-delete-btn:hover {
-  color: #ef4444;
-}
-
-.settings-add-btn {
-  background: #0a0a0a;
-  border: 1px solid #333;
-  border-radius: 4px;
-  color: #ccc;
-  width: 32px;
-  height: 32px;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.settings-add-btn:hover {
-  background: #1a1a1a;
-}
+/* Row, name input, delete button, add button styles from shared.module.css */
