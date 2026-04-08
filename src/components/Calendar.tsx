@@ -21,13 +21,14 @@ import { useCategories } from '../hooks/useCategories';
 import { useCalendarStore } from '../stores/calendarStore';
 import { DayCell } from './DayCell';
 import { DayExpanded } from './DayExpanded';
+import { WeekSummary } from './WeekSummary';
 import { SettingsDialog } from './SettingsDialog';
 import { supabase } from '../lib/supabase';
 import type { Event, Category } from '../types/database';
 import './Calendar.css';
 
 const WEEKS_BUFFER = 26; // load 26 weeks up and down from current
-const WEEK_ROW_HEIGHT = 64; // px per week row
+const WEEK_ROW_HEIGHT = 48; // px per week row (matches --cell-size default)
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 function getWeekStarts(centerDate: Date, weeksBefore: number, weeksAfter: number): Date[] {
@@ -127,11 +128,15 @@ export function Calendar() {
       </header>
 
       <div className="calendar-day-names">
-        {DAY_NAMES.map((name) => (
-          <div key={name} className="day-name">
-            {name}
-          </div>
-        ))}
+        <div className="day-names-spacer" />
+        <div className="day-names-grid">
+          {DAY_NAMES.map((name) => (
+            <div key={name} className="day-name">
+              {name}
+            </div>
+          ))}
+        </div>
+        <div className="day-names-spacer" />
       </div>
 
       <div className="calendar-scroll" ref={containerRef} onScroll={handleScroll}>
@@ -142,42 +147,61 @@ export function Calendar() {
               days.push(addDays(weekStart, i));
             }
 
+            // Collect all unique events for this week
+            const weekEvents: (Event & { category: Category })[] = [];
+            const seenIds = new Set<string>();
+            for (const day of days) {
+              const dateStr = format(day, 'yyyy-MM-dd');
+              const dayEvts = eventsByDate.get(dateStr) || [];
+              for (const evt of dayEvts) {
+                if (!seenIds.has(evt.id)) {
+                  seenIds.add(evt.id);
+                  weekEvents.push(evt);
+                }
+              }
+            }
+
+            // Check if this week contains the 1st of a month
+            const firstOfMonth = days.find((d) => getDate(d) === 1);
+
             return (
-              <div className="calendar-week" key={weekStart.toISOString()}>
-                {days.map((day) => {
-                  const dateStr = format(day, 'yyyy-MM-dd');
-                  const dayNum = getDate(day);
-                  const isFirst = dayNum === 1;
-                  const isToday = isSameDay(day, today);
-                  const isPast = isBefore(day, today);
-                  const dayEvents = eventsByDate.get(dateStr) || [];
-                  const isSelected = selectedDate === dateStr;
+              <div className="calendar-week-row" key={weekStart.toISOString()}>
+                <div className="month-label-cell">
+                  {firstOfMonth && (
+                    <span className="month-label">
+                      {format(firstOfMonth, 'MMM')}
+                    </span>
+                  )}
+                </div>
 
-                  return (
-                    <DayCell
-                      key={dateStr}
-                      date={day}
-                      dateStr={dateStr}
-                      dayNum={dayNum}
-                      isFirst={isFirst}
-                      isToday={isToday}
-                      isPast={isPast}
-                      events={dayEvents}
-                      isSelected={isSelected}
-                      onClick={handleDayClick}
-                    />
-                  );
-                })}
+                <div className="calendar-week">
+                  {days.map((day) => {
+                    const dateStr = format(day, 'yyyy-MM-dd');
+                    const dayNum = getDate(day);
+                    const isFirst = dayNum === 1;
+                    const isToday = isSameDay(day, today);
+                    const isPast = isBefore(day, today);
+                    const dayEvents = eventsByDate.get(dateStr) || [];
+                    const isSelected = selectedDate === dateStr;
 
-                {/* Month label on first-of-month weeks */}
-                {days.some((d) => getDate(d) === 1) && (
-                  <div className="month-label">
-                    {format(
-                      days.find((d) => getDate(d) === 1)!,
-                      'MMMM'
-                    )}
-                  </div>
-                )}
+                    return (
+                      <DayCell
+                        key={dateStr}
+                        date={day}
+                        dateStr={dateStr}
+                        dayNum={dayNum}
+                        isFirst={isFirst}
+                        isToday={isToday}
+                        isPast={isPast}
+                        events={dayEvents}
+                        isSelected={isSelected}
+                        onClick={handleDayClick}
+                      />
+                    );
+                  })}
+                </div>
+
+                <WeekSummary events={weekEvents} />
               </div>
             );
           })}

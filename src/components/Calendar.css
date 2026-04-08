@@ -42,11 +42,22 @@
   background: #252525;
 }
 
+/* ---- Day names header ---- */
 .calendar-day-names {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 48px auto 1fr;
   border-bottom: 1px solid #1a1a1a;
   flex-shrink: 0;
+}
+
+.day-names-spacer {
+  /* empty cell for month-label column and week-summary column */
+}
+
+.day-names-grid {
+  display: grid;
+  grid-template-columns: repeat(7, var(--cell-size));
+  justify-content: center;
 }
 
 .day-name {
@@ -59,6 +70,7 @@
   letter-spacing: 0.05em;
 }
 
+/* ---- Scroll area ---- */
 .calendar-scroll {
   flex: 1;
   overflow-y: auto;
@@ -70,34 +82,43 @@
   flex-direction: column;
 }
 
-.calendar-week {
+/* Each week row: [month-label] [7 day cells] [week summary] */
+.calendar-week-row {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  position: relative;
-  min-height: 64px;
+  grid-template-columns: 48px auto 1fr;
+  align-items: stretch;
+}
+
+.month-label-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .month-label {
-  position: absolute;
-  right: -0.5rem;
-  top: 50%;
-  transform: translateY(-50%) translateX(100%);
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #555;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   white-space: nowrap;
-  pointer-events: none;
-  display: none; /* hidden by default, shown on wider viewports */
 }
 
-@media (min-width: 700px) {
-  .calendar-weeks {
-    margin-right: 80px;
-  }
+.calendar-week {
+  display: grid;
+  grid-template-columns: repeat(7, var(--cell-size));
+  justify-content: center;
+}
 
-  .month-label {
-    display: block;
-  }
+/* ---- CSS custom property for cell size ---- */
+:root {
+  --cell-size: 48px;
+}
+
+@media (min-width: 600px) {
+  :root { --cell-size: 54px; }
+}
+
+@media (min-width: 900px) {
+  :root { --cell-size: 60px; }
 }
