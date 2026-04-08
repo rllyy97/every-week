@@ -18,7 +18,8 @@
 }
 
 .day-cell:hover {
-  box-shadow: inset 0 0 0 1px #444;
+  outline: 1px solid #444;
+  outline-offset: -1px;
   z-index: 1;
 }
 
@@ -31,12 +32,14 @@
 }
 
 .day-cell--today {
-  box-shadow: inset 0 0 0 2px #3b82f6;
+  outline: 2px solid #3b82f6;
+  outline-offset: -1px;
   z-index: 2;
 }
 
 .day-cell--today:hover {
-  box-shadow: inset 0 0 0 2px #3b82f6;
+  outline: 2px solid #3b82f6;
+  outline-offset: -1px;
 }
 
 .day-cell--today .day-cell-num {
@@ -51,12 +54,14 @@
 }
 
 .day-cell--selected {
-  box-shadow: inset 0 0 0 2px #fff;
+  outline: 2px solid #fff;
+  outline-offset: -1px;
   z-index: 3;
 }
 
 .day-cell--selected:hover {
-  box-shadow: inset 0 0 0 2px #fff;
+  outline: 2px solid #fff;
+  outline-offset: -1px;
 }
 
 .day-cell--first .day-cell-num {
