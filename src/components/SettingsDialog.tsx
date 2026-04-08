@@ -31,7 +31,7 @@ export function SettingsDialog() {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="settings-overlay" />
-        <Dialog.Content className="settings-content">
+        <Dialog.Content className="settings-content" aria-describedby={undefined}>
           <div className="settings-header">
             <Dialog.Title className="settings-title">Settings</Dialog.Title>
             <Dialog.Close className="settings-close">×</Dialog.Close>

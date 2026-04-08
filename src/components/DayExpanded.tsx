@@ -47,7 +47,7 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
     <Dialog.Root open onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
         <Dialog.Overlay className="day-expanded-overlay" />
-        <Dialog.Content className="day-expanded-content">
+        <Dialog.Content className="day-expanded-content" aria-describedby={undefined}>
           <div className="day-expanded-header">
             <Dialog.Title className="day-expanded-title">{formattedDate}</Dialog.Title>
             <Dialog.Close className="day-expanded-close">×</Dialog.Close>
