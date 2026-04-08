@@ -43,9 +43,11 @@ function getWeekStarts(centerDate: Date, weeksBefore: number, weeksAfter: number
 export function Calendar() {
   const today = useMemo(() => startOfDay(new Date()), []);
   const containerRef = useRef<HTMLDivElement>(null);
+  const todayRef = useRef<HTMLButtonElement>(null);
   const [weeksBefore, setWeeksBefore] = useState(WEEKS_BUFFER);
   const [weeksAfter, setWeeksAfter] = useState(WEEKS_BUFFER);
   const [initialScrollDone, setInitialScrollDone] = useState(false);
+  const [todayDirection, setTodayDirection] = useState<'above' | 'below' | null>(null);
 
   const selectedDate = useCalendarStore((s) => s.selectedDate);
   const setSelectedDate = useCalendarStore((s) => s.setSelectedDate);
@@ -111,6 +113,39 @@ export function Calendar() {
     [selectedDate, setSelectedDate]
   );
 
+  // Track whether today's cell is visible, and which direction it is
+  useEffect(() => {
+    const container = containerRef.current;
+    const todayEl = todayRef.current;
+    if (!container || !todayEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTodayDirection(null);
+        } else {
+          const containerRect = container.getBoundingClientRect();
+          const todayRect = todayEl.getBoundingClientRect();
+          setTodayDirection(todayRect.top < containerRect.top ? 'above' : 'below');
+        }
+      },
+      { root: container, threshold: 0 }
+    );
+
+    observer.observe(todayEl);
+    return () => observer.disconnect();
+  }, [initialScrollDone]);
+
+  const scrollToToday = useCallback(() => {
+    const todayEl = todayRef.current;
+    const container = containerRef.current;
+    if (!todayEl || !container) return;
+    const containerRect = container.getBoundingClientRect();
+    const todayRect = todayEl.getBoundingClientRect();
+    const offset = todayRect.top - containerRect.top - containerRect.height / 3;
+    container.scrollTop += offset;
+  }, []);
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
   };
@@ -139,8 +174,9 @@ export function Calendar() {
         <div className="day-names-spacer" />
       </div>
 
-      <div className="calendar-scroll" ref={containerRef} onScroll={handleScroll}>
-        <div className="calendar-weeks">
+      <div className="calendar-scroll-wrapper">
+        <div className="calendar-scroll" ref={containerRef} onScroll={handleScroll}>
+          <div className="calendar-weeks">
           {weeks.map((weekStart) => {
             const days: Date[] = [];
             for (let i = 0; i < 7; i++) {
@@ -187,6 +223,7 @@ export function Calendar() {
                     return (
                       <DayCell
                         key={dateStr}
+                        ref={isToday ? todayRef : undefined}
                         date={day}
                         dateStr={dateStr}
                         dayNum={dayNum}
@@ -206,6 +243,17 @@ export function Calendar() {
             );
           })}
         </div>
+      </div>
+
+        {todayDirection && (
+          <button
+            className={`scroll-to-today scroll-to-today--${todayDirection === 'above' ? 'top' : 'bottom'}`}
+            onClick={scrollToToday}
+          >
+            <span className="scroll-to-today-arrow">{todayDirection === 'above' ? '↑' : '↓'}</span>
+            Today
+          </button>
+        )}
       </div>
 
       {selectedDate && (

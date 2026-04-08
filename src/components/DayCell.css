@@ -6,6 +6,8 @@
   width: var(--cell-size);
   height: var(--cell-size);
   border: none;
+  border-right: 1px dotted #333;
+  border-bottom: 1px dotted #333;
   background: transparent;
   color: #e0e0e0;
   font-size: 0.875rem;

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, forwardRef } from 'react';
 import type { Event, Category } from '../types/database';
 import './DayCell.css';
 
@@ -14,7 +14,7 @@ interface DayCellProps {
   onClick: (dateStr: string) => void;
 }
 
-export const DayCell = memo(function DayCell({
+export const DayCell = memo(forwardRef<HTMLButtonElement, DayCellProps>(function DayCell({
   dateStr,
   dayNum,
   isFirst,
@@ -23,7 +23,7 @@ export const DayCell = memo(function DayCell({
   events,
   isSelected,
   onClick,
-}: DayCellProps) {
+}, ref) {
   const uniqueColors = [...new Set(events.map((e) => e.category?.color).filter(Boolean))];
   const hasEvents = uniqueColors.length > 0;
 
@@ -52,6 +52,7 @@ export const DayCell = memo(function DayCell({
 
   return (
     <button
+      ref={ref}
       className={cellClass}
       onClick={() => onClick(dateStr)}
       aria-label={`${dateStr}${isToday ? ' (today)' : ''}`}
@@ -70,4 +71,4 @@ export const DayCell = memo(function DayCell({
       </span>
     </button>
   );
-});
+}));
