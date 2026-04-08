@@ -115,6 +115,9 @@
   grid-template-columns: repeat(7, var(--cell-size));
   justify-content: center;
   border-left: 1px dotted #333;
+}
+
+.calendar-week-row:first-child .calendar-week {
   border-top: 1px dotted #333;
 }
 
