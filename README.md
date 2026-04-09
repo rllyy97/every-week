@@ -36,8 +36,8 @@ EveryWeek is a personal calendar app with an infinite-scrolling week view, day c
 ### Installation
 
 ```bash
-git clone https://github.com/rllyy97/seven-calendar.git
-cd seven-calendar
+git clone https://github.com/rllyy97/every-week.git
+cd every-week
 npm install
 ```
 
