@@ -31,6 +31,7 @@ import { SettingsDialog } from './SettingsDialog';
 import { supabase } from '../lib/supabase';
 import type { Event, Category } from '../types/database';
 import shared from '../styles/shared.module.css';
+import logoSvg from '../assets/logo.svg';
 import './Calendar.css';
 
 const WEEKS_BUFFER = 26; // load 26 weeks up and down from current
@@ -326,7 +327,7 @@ export function Calendar() {
     <div className="calendar-layout">
       <header className="calendar-header">
         <h1 className="calendar-logo">
-          <img src="/logo.svg" alt="" className="calendar-logo-icon" />
+          <img src={logoSvg} alt="" className="calendar-logo-icon" />
           EveryWeek
         </h1>
         <div className="calendar-header-actions">

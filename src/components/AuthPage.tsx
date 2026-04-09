@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import * as Label from '@radix-ui/react-label';
 import shared from '../styles/shared.module.css';
+import logoSvg from '../assets/logo.svg';
 import './AuthPage.css';
 
 const LOCKOUT_THRESHOLD = 5;
@@ -54,7 +55,7 @@ export function AuthPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <img src="/logo.svg" alt="" className="auth-logo" />
+        <img src={logoSvg} alt="" className="auth-logo" />
         <h1 className="auth-title">EveryWeek</h1>
         <p className="auth-subtitle">Your infinite scroll calendar</p>
 
