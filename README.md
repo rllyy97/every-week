@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# EveryWeek
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Week-based calendar
 
-Currently, two official plugins are available:
+EveryWeek is a personal calendar app with an infinite-scrolling week view, day color-coding, and event management organized by custom categories.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Infinite scroll** — week-by-week scrolling in both directions with a "Jump to Today" button
+- **Day painting** — click or drag to assign a category color to days; click again or use the eraser to remove
+- **Multi-day events** — create, edit, and delete events spanning one or more days, each tied to a category
+- **Custom categories** — create, rename, recolor, reorder, and delete categories; new accounts get four defaults
+- **Week summaries** — sidebar showing events per week with overflow indicators
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React 19, TypeScript 6, Vite
+- Supabase (Postgres, Auth, RLS)
+- React Query v5, Zustand v5
+- Radix UI, date-fns
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 18+
+- A [Supabase](https://supabase.com) project
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Supabase Setup
+
+1. Create a new Supabase project
+2. Create the required tables (`categories`, `events`, `day_categories`) — see [`src/types/database.ts`](src/types/database.ts) for the schema
+3. Enable Row-Level Security (RLS) on all tables with policies filtering by `user_id`
+4. Enable the Email/Password auth provider
+
+### Installation
+
+```bash
+git clone https://github.com/rllyy97/seven-calendar.git
+cd seven-calendar
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create a `.env` file in the project root:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
+
+### Development
+
+```bash
+npm run dev        # Start dev server (localhost:5173)
+```
+
+### Build & Test
+
+```bash
+npm run build      # Type-check and build for production
+npm run test       # Run unit tests with Vitest
+npm run lint       # Lint with ESLint
+```
+
+## Project Structure
+
+```
+src/
+├── components/    # UI components (Calendar, DayCell, DayExpanded, Settings, Auth, etc.)
+├── hooks/         # React Query hooks for categories, events, and day colors
+├── stores/        # Zustand stores (auth, calendar state, paint tool)
+├── lib/           # Supabase client
+├── types/         # Database type definitions
+├── styles/        # Shared CSS modules
+└── test/          # Vitest tests and setup
+```
+
+## License
+
+PolyForm Noncommercial License 1.0.0
