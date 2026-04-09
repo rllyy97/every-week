@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as Tooltip from '@radix-ui/react-tooltip';
 import { supabase } from './lib/supabase';
 import { useAuthStore } from './stores/authStore';
 import { AuthPage } from './components/AuthPage';
@@ -18,8 +19,14 @@ function AppContent() {
   const { user, loading, setAuth } = useAuthStore();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setAuth(session?.user ?? null, session);
+    supabase.auth.getUser().then(({ data: { user }, error }) => {
+      if (error || !user) {
+        setAuth(null, null);
+      } else {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          setAuth(session?.user ?? null, session);
+        });
+      }
     });
 
     const {
@@ -48,7 +55,9 @@ function AppContent() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppContent />
+      <Tooltip.Provider delayDuration={300}>
+        <AppContent />
+      </Tooltip.Provider>
     </QueryClientProvider>
   );
 }

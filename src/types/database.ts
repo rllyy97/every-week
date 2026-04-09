@@ -36,6 +36,45 @@ export type Database = {
           }
         ];
       };
+      day_categories: {
+        Row: {
+          id: string;
+          user_id: string;
+          date: string;
+          category_id: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          date: string;
+          category_id: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          date?: string;
+          category_id?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "day_categories_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "day_categories_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       events: {
         Row: {
           id: string;
@@ -99,3 +138,7 @@ export type CategoryUpdate = Database['public']['Tables']['categories']['Update'
 export type Event = Database['public']['Tables']['events']['Row'];
 export type EventInsert = Database['public']['Tables']['events']['Insert'];
 export type EventUpdate = Database['public']['Tables']['events']['Update'];
+
+export type DayCategory = Database['public']['Tables']['day_categories']['Row'];
+export type DayCategoryInsert = Database['public']['Tables']['day_categories']['Insert'];
+export type DayCategoryUpdate = Database['public']['Tables']['day_categories']['Update'];

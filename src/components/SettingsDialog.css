@@ -16,14 +16,56 @@
   margin-bottom: 0.75rem;
 }
 
+.settings-category-row {
+  transition: opacity var(--transition-fast);
+}
+
+.settings-category-row--dragging {
+  opacity: 0.5;
+}
+
+.settings-drag-handle {
+  cursor: grab;
+  color: var(--text-disabled);
+  font-size: 0.875rem;
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.settings-drag-handle:hover {
+  color: var(--text-tertiary);
+}
+
+.settings-drag-handle:active {
+  cursor: grabbing;
+}
+
 .settings-color-input {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
   background: transparent;
   padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+}
+
+.settings-color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.settings-color-input::-webkit-color-swatch {
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.settings-color-input::-moz-color-swatch {
+  border: none;
+  border-radius: var(--radius-sm);
 }
 
 /* Row, name input, delete button, add button styles from shared.module.css */

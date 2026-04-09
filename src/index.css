@@ -17,7 +17,7 @@
   /* Borders */
   --border-default: #333;
   --border-subtle: #2a2a2a;
-  --border-hover: #444;
+  --border-hover: #808080;
 
   /* Accents */
   --accent-blue: #3b82f6;
@@ -32,6 +32,12 @@
 
   /* Transitions */
   --transition-fast: 0.15s;
+
+  /* Values */
+  --cell-border-offset: -1px;
+
+  /* Util colors */
+  --transparent: transparent;
 }
 
 *,

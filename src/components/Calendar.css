@@ -19,6 +19,14 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-logo-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .calendar-header-actions {
@@ -68,6 +76,7 @@
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  overflow-anchor: none;
 }
 
 .calendar-weeks {
@@ -91,10 +100,21 @@
 .month-label {
   font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--text-disabled);
+  color: var(--text-primary);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.month-label-year {
+  font-size: 0.5625rem;
+  font-weight: 600;
+  color: var(--text-subtle);
+  letter-spacing: 0.04em;
 }
 
 .calendar-week {
@@ -147,15 +167,29 @@
   font-size: 0.75rem;
 }
 
-/* ---- CSS custom property for cell size ---- */
-:root {
-  --cell-size: 48px;
+.scroll-to-today-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 0.625rem;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-default);
+  border-radius: 0.25rem;
 }
 
-@media (min-width: 600px) {
-  :root { --cell-size: 54px; }
+/* ---- CSS custom property for cell size ---- */
+:root {
+  --cell-size: 40px;
 }
 
 @media (min-width: 900px) {
-  :root { --cell-size: 60px; }
+  :root { --cell-size: 48px; }
 }

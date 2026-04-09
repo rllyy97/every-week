@@ -15,7 +15,7 @@ vi.mock('../lib/supabase', () => ({
 describe('AuthPage', () => {
   it('renders sign in form by default', () => {
     render(<AuthPage />);
-    expect(screen.getByText('Seven')).toBeInTheDocument();
+    expect(screen.getByText('EveryWeek')).toBeInTheDocument();
     expect(screen.getByText('Your infinite scroll calendar')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument();
   });

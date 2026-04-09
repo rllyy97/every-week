@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase';
 import { useAuthStore } from '../stores/authStore';
 import type { EventInsert, EventUpdate } from '../types/database';
@@ -44,6 +44,7 @@ export function useEventsForRange(startDate: string, endDate: string) {
     },
     enabled: !!user,
     staleTime: 30000,
+    placeholderData: keepPreviousData,
   });
 }
 

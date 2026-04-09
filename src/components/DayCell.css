@@ -5,7 +5,8 @@
   justify-content: center;
   width: var(--cell-size);
   height: var(--cell-size);
-  border: none;
+  border-left: 1px dotted var(--transparent);
+  border-top: 1px dotted var(--transparent);
   border-right: 1px dotted var(--border-default);
   border-bottom: 1px dotted var(--border-default);
   background: transparent;
@@ -15,16 +16,17 @@
   cursor: pointer;
   padding: 0;
   overflow: hidden;
+  border-radius: 7px;
 }
 
 .day-cell:hover {
   outline: 1px solid var(--border-hover);
-  outline-offset: -1px;
+  outline-offset: var(--cell-border-offset);
   z-index: 1;
 }
 
 .day-cell--past {
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .day-cell--past:hover {
@@ -33,19 +35,19 @@
 
 .day-cell--today {
   outline: 2px solid var(--accent-blue);
-  outline-offset: -1px;
+  outline-offset: var(--cell-border-offset);
   z-index: 2;
 }
 
 .day-cell--today:hover {
   outline: 2px solid var(--accent-blue);
-  outline-offset: -1px;
+  outline-offset: var(--cell-border-offset);
 }
 
 .day-cell--today .day-cell-num {
-  background: var(--accent-blue);
+  background: var(--bg-surface);
   color: var(--text-primary);
-  border-radius: 50%;
+  border-radius: 16px;
   width: 28px;
   height: 28px;
   display: flex;
@@ -55,17 +57,23 @@
 
 .day-cell--selected {
   outline: 2px solid var(--text-primary);
-  outline-offset: -1px;
+  outline-offset: var(--cell-border-offset);
   z-index: 3;
 }
 
 .day-cell--selected:hover {
   outline: 2px solid var(--text-primary);
-  outline-offset: -1px;
+  outline-offset: var(--cell-border-offset);
 }
 
 .day-cell--first .day-cell-num {
   font-weight: 700;
+}
+
+.day-cell--paint {
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .day-cell-bg {
@@ -73,6 +81,19 @@
   inset: 2px;
   border-radius: 4px;
   opacity: 0.8;
+}
+
+.day-cell-corner {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  z-index: 1;
+  background: var(--corner-color);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  border-radius: 4px 0 0 0;
+  opacity: 0.95;
 }
 
 .day-cell-num {

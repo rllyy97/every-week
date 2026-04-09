@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useCreateEvent, useUpdateEvent, useDeleteEvent } from '../hooks/useEvents';
+import { CategorySelect } from './CategorySelect';
 import type { Event, Category } from '../types/database';
 import shared from '../styles/shared.module.css';
 import './DayExpanded.css';
@@ -10,10 +11,55 @@ interface DayExpandedProps {
   dateStr: string;
   events: (Event & { category: Category })[];
   categories: Category[];
+  defaultCategory?: { name: string; color: string };
+  onSetDefaultCategory: (categoryId: string) => void;
+  onRemoveDefaultCategory: () => void;
   onClose: () => void;
 }
 
-export function DayExpanded({ dateStr, events, categories, onClose }: DayExpandedProps) {
+function EditableTitle({ event, onSave }: { event: Event; onSave: (title: string) => void }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(event.title);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editing) inputRef.current?.focus();
+  }, [editing]);
+
+  const commit = () => {
+    const trimmed = value.trim();
+    if (trimmed && trimmed !== event.title) {
+      onSave(trimmed);
+    } else {
+      setValue(event.title);
+    }
+    setEditing(false);
+  };
+
+  if (editing) {
+    return (
+      <input
+        ref={inputRef}
+        className="event-item-title-input"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') commit();
+          if (e.key === 'Escape') { setValue(event.title); setEditing(false); }
+        }}
+      />
+    );
+  }
+
+  return (
+    <span className="event-item-title event-item-title--editable" onClick={() => setEditing(true)}>
+      {event.title}
+    </span>
+  );
+}
+
+export function DayExpanded({ dateStr, events, categories, defaultCategory, onSetDefaultCategory, onRemoveDefaultCategory, onClose }: DayExpandedProps) {
   const date = parseISO(dateStr);
   const formattedDate = format(date, 'EEEE, MMMM d, yyyy');
 
@@ -54,6 +100,23 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
             <Dialog.Close className={shared.closeBtn}>×</Dialog.Close>
           </div>
 
+          <div className="day-expanded-default-category">
+            <CategorySelect
+              categories={categories}
+              value={categories.find((c) => c.name === defaultCategory?.name)?.id || ''}
+              onChange={(id) => {
+                if (id) {
+                  onSetDefaultCategory(id);
+                } else {
+                  onRemoveDefaultCategory();
+                }
+              }}
+              placeholder="No default"
+              allowEmpty
+              size="sm"
+            />
+          </div>
+
           <div className="day-expanded-events">
             {events.length === 0 && !showAddForm && (
               <p className="day-expanded-empty">No events</p>
@@ -66,13 +129,17 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
                 style={{ borderLeftColor: event.category?.color || '#666' }}
               >
                 <div className="event-item-main">
-                  <span
-                    className="event-color-dot"
-                    style={{ background: event.category?.color || '#666' }}
-                  />
                   <div className="event-item-info">
-                    <span className="event-item-title">{event.title}</span>
-                    <span className="event-item-category">{event.category?.name}</span>
+                    <EditableTitle
+                      event={event}
+                      onSave={(title) => updateEvent.mutate({ id: event.id, title })}
+                    />
+                    <CategorySelect
+                      categories={categories}
+                      value={event.category_id}
+                      onChange={(id) => updateEvent.mutate({ id: event.id, category_id: id })}
+                      size="sm"
+                    />
                   </div>
                 </div>
                 <div className="event-item-actions">
@@ -116,18 +183,11 @@ export function DayExpanded({ dateStr, events, categories, onClose }: DayExpande
                 autoFocus
               />
               <div className={shared.formRow}>
-                <select
-                  className={shared.selectInput}
-                  style={{ flex: 1 }}
+                <CategorySelect
+                  categories={categories}
                   value={newCategoryId}
-                  onChange={(e) => setNewCategoryId(e.target.value)}
-                >
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(id) => setNewCategoryId(id)}
+                />
                 <div className="duration-control">
                   <button
                     className="duration-btn"

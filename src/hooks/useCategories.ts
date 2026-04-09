@@ -67,3 +67,18 @@ export function useDeleteCategory() {
     },
   });
 }
+
+export function useReorderCategories() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (orderedIds: string[]) => {
+      const updates = orderedIds.map((id, i) =>
+        supabase.from('categories').update({ sort_order: i }).eq('id', id)
+      );
+      const results = await Promise.all(updates);
+      const err = results.find((r) => r.error);
+      if (err?.error) throw err.error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['categories'] }),
+  });
+}
