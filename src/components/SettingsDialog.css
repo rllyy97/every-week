@@ -1,19 +1,19 @@
 /* Dialog base styles come from shared.module.css applied in the component */
 
 .settings-section-title {
-  font-size: 0.8125rem;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-faint);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 0 0 0.75rem;
+  margin: 0 0 12px;
 }
 
 .settings-categories {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .settings-category-row {
@@ -27,7 +27,7 @@
 .settings-drag-handle {
   cursor: grab;
   color: var(--text-disabled);
-  font-size: 0.875rem;
+  font-size: 14px;
   line-height: 1;
   user-select: none;
   flex-shrink: 0;

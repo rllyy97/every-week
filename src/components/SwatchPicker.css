@@ -1,14 +1,14 @@
 .swatch-picker {
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: 6px;
 }
 
 .swatch-picker-icon {
   display: flex;
   align-items: center;
   color: var(--text-muted);
-  margin-right: 0.125rem;
+  margin-right: 2px;
 }
 
 .swatch-btn {
@@ -39,7 +39,7 @@
   background: var(--bg-surface);
   border: 2px dashed var(--border-default);
   color: var(--text-muted);
-  font-size: 0.625rem;
+  font-size: 10px;
 }
 
 .swatch-btn--eraser:hover {
@@ -51,4 +51,66 @@
   border-style: solid;
   border-color: var(--text-primary);
   color: var(--text-primary);
+}
+
+/* ---- Compact trigger (small screens) ---- */
+
+.swatch-picker-compact-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  padding: 6px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.swatch-picker-compact-trigger:hover {
+  background: var(--bg-surface-hover);
+}
+
+.swatch-picker-compact-trigger--active {
+  border: 1px solid var(--border-active);
+  color: var(--text-primary);
+}
+
+.swatch-picker-compact-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.swatch-picker-compact-dot--eraser {
+  background: var(--bg-surface);
+  border: 1.5px dotted var(--border-hover);
+  font-size: 6.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+/* ---- Popover ---- */
+
+.swatch-picker-popover {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  animation: swatchPopoverFadeIn 100ms ease-out;
+}
+
+@keyframes swatchPopoverFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -341,7 +341,7 @@ export function Calendar() {
             target="_blank"
             rel="noopener noreferrer"
             className={shared.btnSurface}
-            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.375rem' }}
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '6px' }}
             aria-label="GitHub"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
