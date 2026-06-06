@@ -5,7 +5,6 @@ import {
   format,
   isSameDay,
   isBefore,
-  startOfDay,
   addDays,
   getDate,
   getYear,
@@ -21,6 +20,7 @@ import { flushSync } from 'react-dom';
 import { useEventsForRange } from '../hooks/useEvents';
 import { useDayColorsForRange, useBatchSetDayColors, useBatchRemoveDayColors } from '../hooks/useDayColors';
 import { useCategories } from '../hooks/useCategories';
+import { useToday } from '../hooks/useToday';
 import { useCalendarStore } from '../stores/calendarStore';
 import { usePaintStore } from '../stores/paintStore';
 import { DayCell } from './DayCell';
@@ -48,7 +48,7 @@ function getWeekStarts(centerDate: Date, weeksBefore: number, weeksAfter: number
 }
 
 export function Calendar() {
-  const today = useMemo(() => startOfDay(new Date()), []);
+  const today = useToday();
   const containerRef = useRef<HTMLDivElement>(null);
   const todayRef = useRef<HTMLButtonElement>(null);
   const [weeksBefore, setWeeksBefore] = useState(WEEKS_BUFFER);
